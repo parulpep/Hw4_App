@@ -1,5 +1,5 @@
 Assignment 3
-=========================
+============
 
 ### Setup
 
@@ -20,13 +20,13 @@ The tasks are explained as below and the code files main.js and proxy.js have th
 * Try localhost:3000/get again in 10 secs. The message will dissapear from screen because expire function sets the timer for   the message as 10 sec.
 * Output:
 
-![/set route]()
+![/set route](https://github.com/parulpep/HW3/blob/master/set_image.PNG)
 
 
-![/get route]()
+![/get route](https://github.com/parulpep/HW3/blob/master/get_image.PNG)
 
 
-![/get route after expiry]()
+![/get route after expiry](https://github.com/parulpep/HW3/blob/master/get_expire.PNG)
 
 
 
@@ -40,9 +40,9 @@ The tasks are explained as below and the code files main.js and proxy.js have th
         [ '/recent', '/get', '/set', '/set', '/get' ]
         [ '/recent', '/meow', '/meow', '/meow', '/recent' ]
 
-* Output
+* Output:
 
-![/recent route]()
+![/recent route](https://github.com/parulpep/HW3/blob/master/recent_image.PNG)
 
 
 ## Task 3: Complete upload/meow
@@ -56,7 +56,7 @@ The tasks are explained as below and the code files main.js and proxy.js have th
 * Then, run localhost:3000/meow, the latest uploaded image is shown. With each refresh, the next image in list is shown thus showing removal of the displayed image.
 *  Output:
 
-![/meow route]()
+![/meow route](https://github.com/parulpep/HW3/blob/master/meow_image.PNG)
 
 ## Task 4: Additional service instance running
 
