@@ -6,7 +6,8 @@ var app = express()
 // REDIS
 var redis = require('redis')
 var client = redis.createClient(6379, '127.0.0.1', {})
-
+var list1 = [];
+var list2 = [];
 
 // Task 2
 // Add hook to make it easier to get all visited URLS.
@@ -26,7 +27,6 @@ app.get('/recent', function(req, res, next)
 });
 
 // Task 3
-var items = [];
  app.post('/upload',[ multer({ dest: './uploads/'}), function(req, res){
 //    console.log(req.body) // form fields
 //    console.log(req.files) // form files
@@ -36,7 +36,10 @@ var items = [];
  	   fs.readFile( req.files.image.path, function (err, data) {
  	  		if (err) throw err;
  	  		var img = new Buffer(data).toString('base64');
-			items.push(img);                      // On upload, the images are put in the queue list items
+			client.rpush(['items1', img], function(err, value){
+
+	  		});
+			                     // On upload, the images are put in the queue list items
  	  	//	console.log(img);
  		});
  	}
@@ -48,20 +51,22 @@ var items = [];
 // Function that displays the uploaded pics.
 app.get('/meow', function(req, res) {
  	{
-	    client.lpush('urls',req.url);
+	    client.rpoplpush('items1', list1, function(err,value){		});
  	//	if (err) throw err
+	    client.lrange(list1,0,0,function(err,value){
+			list2 = value;
+		});
  		res.writeHead(200, {'content-type':'text/html'});
- 		items.forEach(function (imagedata) 
+ 		list2.forEach(function (imagedata) 
  		{
     		temp_Image = imagedata;                  
 		//	console.log(imagedata);          
  		});
-		res.write("<h1>\n<img src='data:my_pic.jpg;base64,"+temp_Image+"'/>");     // For displaying the most recent image to the client
-		items.pop();       // For deleting the recently displayed image
+		res.write("<h1>\n<img src='data:my_pic.jpg;base64,"+temp_Image+"'/>");     // For displaying the most recent image to the Greenclient
+		//items1.pop();       // For deleting the recently displayed image
     	res.end();
  	}
  })
- 
 
 // HTTP SERVER
  var server = app.listen(3000, function () {
